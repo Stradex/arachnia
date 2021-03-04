@@ -43,7 +43,14 @@ var ending = "res://scenes/ending.tscn"
 var speedrunMode = false
 var speedrunTimer = 0
 
+# STRADEX BEGIN
+var NetcodeObj = NetworkObject.new(self)
+# STRADEX END
+
 func _ready():
+# STRADEX BEGIN
+	NetcodeObj._setup()
+# STRADEX END
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"),Global.volume)
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Sounds"),Global.sound_volume)
 

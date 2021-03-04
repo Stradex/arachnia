@@ -14,7 +14,6 @@ var fallModifier = 1
 var highJumpModifier = 1
 
 var wallcrawl = false
-
 var painActive = false
 
 func _ready():
