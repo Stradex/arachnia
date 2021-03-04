@@ -1,0 +1,2 @@
+sfx/** filter=lfs diff=lfs merge=lfs -text
+sprites/** filter=lfs diff=lfs merge=lfs -text

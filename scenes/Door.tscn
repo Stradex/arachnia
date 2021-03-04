@@ -1,0 +1,98 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://sprites/door_up.png" type="Texture" id=1]
+[ext_resource path="res://sprites/door_down.png" type="Texture" id=2]
+[ext_resource path="res://SFX/sfx_switch.wav" type="AudioStream" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "door_Open"
+length = 1.2
+step = 0.15
+tracks/0/type = "value"
+tracks/0/path = NodePath("Door_Up:position")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1.05, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8, 8 ), Vector2( 8, 6 ), Vector2( 8, 4 ), Vector2( 8, 2 ), Vector2( 8, 0 ), Vector2( 8, -2 ), Vector2( 8, -4 ), Vector2( 8, -6 ), Vector2( 8, -8 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Door_Down:position")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1.05, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8, 24 ), Vector2( 8, 26 ), Vector2( 8, 28 ), Vector2( 8, 30 ), Vector2( 8, 32 ), Vector2( 8, 34 ), Vector2( 8, 36 ), Vector2( 8, 38 ), Vector2( 8, 40 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("sfx_open:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("sfx_open:volume_db")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6, 0.9, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -6.0, -51.495, -8.078 ]
+}
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 8, 8 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 8, 8 )
+
+[node name="Door" type="Node2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/door_Open = SubResource( 1 )
+
+[node name="Door_Up" type="Sprite" parent="."]
+position = Vector2( 8, 8 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Door_Up"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door_Up/StaticBody2D"]
+shape = SubResource( 2 )
+
+[node name="Door_Down" type="Sprite" parent="."]
+position = Vector2( 8, 24 )
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Door_Down"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door_Down/StaticBody2D"]
+shape = SubResource( 3 )
+
+[node name="sfx_open" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+max_distance = 256.0
+bus = "Sounds"

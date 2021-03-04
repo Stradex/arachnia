@@ -1,0 +1,217 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://sprites/character/player_A2.png" type="Texture" id=1]
+[ext_resource path="res://scripts/SpiderPlayer.gd" type="Script" id=2]
+[ext_resource path="res://sprites/character/player_A4.png" type="Texture" id=3]
+[ext_resource path="res://sprites/character/player_A3.png" type="Texture" id=4]
+[ext_resource path="res://sprites/character/player_A6.png" type="Texture" id=5]
+[ext_resource path="res://scripts/SpiderAnimation.gd" type="Script" id=6]
+[ext_resource path="res://sprites/character/player_A5.png" type="Texture" id=7]
+[ext_resource path="res://sprites/character/player_A1.png" type="Texture" id=8]
+[ext_resource path="res://SFX/sfx_step.wav" type="AudioStream" id=9]
+[ext_resource path="res://SFX/sfx_jump.wav" type="AudioStream" id=10]
+[ext_resource path="res://SFX/sfx_pain.wav" type="AudioStream" id=11]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 1 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "walk",
+"speed": 9.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "fall",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=2]
+resource_name = "fall"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "fall" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "idle" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "jump"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "jump" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.46
+step = 0.08
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "walk" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.08, 0.16, 0.24, 0.32, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 4, 7.5 )
+
+[sub_resource type="Animation" id=7]
+length = 0.7
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "unpain"
+} ]
+}
+
+[node name="SpiderPlayer" type="KinematicBody2D"]
+collision_layer = 512
+collision_mask = 511
+script = ExtResource( 2 )
+
+[node name="debugtext" type="RichTextLabel" parent="."]
+visible = false
+margin_left = -20.0
+margin_top = -48.0
+margin_right = 20.0
+margin_bottom = -8.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpiderSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "fall"
+script = ExtResource( 6 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SpiderSprite"]
+autoplay = "idle"
+anims/fall = SubResource( 2 )
+anims/idle = SubResource( 3 )
+anims/jump = SubResource( 4 )
+anims/walk = SubResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2( 1, 0.8 )
+shape = SubResource( 6 )
+
+[node name="DebuffAnimations" type="AnimationPlayer" parent="."]
+anims/pain = SubResource( 7 )
+
+[node name="sfx_steps" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -9.088
+pitch_scale = 2.32
+bus = "Sounds"
+
+[node name="sfx_jump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -19.469
+pitch_scale = 1.74
+bus = "Sounds"
+
+[node name="sfx_pain" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = -33.32
+pitch_scale = 0.84
+bus = "Sounds"

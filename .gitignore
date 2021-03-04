@@ -1,0 +1,5 @@
+.export/
+*.zip
+*.rar
+*.exe
+*.pck
