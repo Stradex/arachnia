@@ -43,6 +43,7 @@ texture = ExtResource( 3 )
 flip_h = true
 
 [node name="Menu1" type="Node2D" parent="CanvasLayer"]
+visible = false
 position = Vector2( 224, 64 )
 
 [node name="MenuSelector1" type="RichTextLabel" parent="CanvasLayer/Menu1"]
@@ -159,7 +160,6 @@ __meta__ = {
 }
 
 [node name="Multiplayer" type="Node2D" parent="CanvasLayer"]
-visible = false
 
 [node name="MultiplayerLabel" type="RichTextLabel" parent="CanvasLayer/Multiplayer"]
 margin_left = 336.0
@@ -235,6 +235,7 @@ margin_left = 256.0
 margin_top = 320.0
 margin_right = 512.0
 margin_bottom = 352.0
+text = "localhost"
 __meta__ = {
 "_edit_use_anchors_": false
 }

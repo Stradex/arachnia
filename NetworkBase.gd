@@ -28,13 +28,15 @@ func _connected_fail():
 func _server_disconnected():
 	print("_server_disconnected")
 
-func host_game(name):
+func host_game():
+	_gameNode.get_tree().set_network_peer(null);
 	var host: NetworkedMultiplayerENet = NetworkedMultiplayerENet.new();
 	host.create_server(PORT);
 	_gameNode.get_tree().set_network_peer(host);
 	print("host_game")
 
 func join_game(ip):
+	_gameNode.get_tree().set_network_peer(null);
 	var host: NetworkedMultiplayerENet = NetworkedMultiplayerENet.new();
 	host.create_client(ip, PORT);
 	_gameNode.get_tree().set_network_peer(host);

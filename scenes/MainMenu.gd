@@ -1,5 +1,6 @@
 extends Node2D
 
+onready var JoinServerIP: TextEdit = $CanvasLayer/Multiplayer/JoinServerBox
 
 func _ready():
 	Global.speedrunMode = false
@@ -10,15 +11,32 @@ func _ready():
 		$CanvasLayer/Menu1/MenuSelector1.text = "New Game +"
 		$CanvasLayer/Menu1/MenuSelector1/MenuSelector1Active.text = "New Game +"
 
+func handle_host_server():
+	Global.NetcodeObj.host_game()
 
+func handle_join_server():
+	Global.NetcodeObj.join_game(JoinServerIP.text)
 
+#STRADEX BEGIN
+enum SUBMENU_CASE {
+	MAINMENU=0,
+	MULTIPLAYER,
+	OPTIONS
+}
+enum MP_CASE {
+	HOST_SERVER=0,
+	JOIN_SERVER,
+	RETURN
+}
+
+#Stradex END
 var menu = 0
 var submenu = 0
 
 func _process(delta):
 	keyCheck()
 	match submenu:
-		0:
+		SUBMENU_CASE.MAINMENU:
 			$CanvasLayer/Multiplayer.hide()
 			$CanvasLayer/Menu1.show()
 			$CanvasLayer/Menu2.hide()
@@ -43,24 +61,24 @@ func _process(delta):
 					$CanvasLayer/Menu1/MenuSelector1/MenuSelector1Active.hide()
 					$CanvasLayer/Menu1/MenuSelector2/MenuSelector2Active.hide()
 					$CanvasLayer/Menu1/MenuSelector3/MenuSelector3Active.hide()
-		1:
+		SUBMENU_CASE.MULTIPLAYER:
 			$CanvasLayer/Multiplayer.show()
 			$CanvasLayer/Menu1.hide()
 			$CanvasLayer/Menu2.hide()
 			match menu:
-				0:
+				MP_CASE.HOST_SERVER:
 					$CanvasLayer/Multiplayer/Host/Active.show()
 					$CanvasLayer/Multiplayer/Join/Active.hide()
 					$CanvasLayer/Multiplayer/Return/Active.hide()
-				1:
+				MP_CASE.JOIN_SERVER:
 					$CanvasLayer/Multiplayer/Host/Active.hide()
 					$CanvasLayer/Multiplayer/Join/Active.show()
 					$CanvasLayer/Multiplayer/Return/Active.hide()
-				2:
+				MP_CASE.RETURN: 
 					$CanvasLayer/Multiplayer/Host/Active.hide()
 					$CanvasLayer/Multiplayer/Join/Active.hide()
 					$CanvasLayer/Multiplayer/Return/Active.show()
-		2:
+		SUBMENU_CASE.OPTIONS:
 			$CanvasLayer/Menu1.hide()
 			$CanvasLayer/Menu2.show()
 			checkVolume()
@@ -104,7 +122,7 @@ func keyCheck():
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		match submenu:
-			0:
+			SUBMENU_CASE.MAINMENU:
 				match menu:
 					0:
 						get_tree().change_scene(Global.Level1)
@@ -116,16 +134,16 @@ func keyCheck():
 						menu = 0
 					3:
 						get_tree().quit()
-			1:
+			SUBMENU_CASE.MULTIPLAYER:
 				match menu:
-					0:
-						pass
-					1:
-						pass
-					2:
+					MP_CASE.HOST_SERVER:
+						handle_host_server()
+					MP_CASE.JOIN_SERVER:
+						handle_join_server()
+					MP_CASE.RETURN:
 						submenu = 0
 						menu = 0
-			2:
+			SUBMENU_CASE.OPTIONS:
 				match menu:
 					0:
 						pass
